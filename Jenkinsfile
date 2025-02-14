@@ -1,16 +1,33 @@
-pipeline {
-    agent { label 'mvn-agent-build' }
-    stages {
-        stage('clone') {
-            steps {
-               git branch: "main", url: 'https://github.com/mounikachitiki/java-war-repo.git'
-            }
-        }
-        stage('build') {
-            steps {
-                sh 'mvn clean install'
-            }
-        }
-        
-    }
-}
+pipeline { 
+ agent any 
+ stages { 
+ stage('Clean Up') { 
+ steps { 
+ cleanWs() 
+ } 
+ } 
+ stage('Parallel Execution') { 
+ parallel { 
+ stage('Clone') { 
+ steps { 
+ sh 'git clone https://github.com/mounikachitiki/java-war-repo.git' 
+ } 
+ } 
+ stage('Build') { 
+ steps { 
+ dir('java-war-repo') { 
+ sh 'mvn clean install -DskipTests' 
+ } 
+ } 
+ } 
+} 
+} 
+ stage('Test') { 
+ steps {
+ dir('java-war-repo') {
+ sh 'mvn test'
+ }
+ }
+ }
+ }
+ }
