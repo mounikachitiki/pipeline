@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('clone') {
             steps {
-               git branch: "main", url: 'https://github.com/mounikachitiki/java-war-repo.git'
+               git branch: "main", url: 'https://github.com/mounikachitiki/pipeline.git'
             }
         }
         stage('build') {
