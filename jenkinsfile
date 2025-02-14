@@ -1,9 +1,9 @@
 pipeline {
-    agent { label 'mvn-buildagent-forjava' }
+    agent { label 'mvn-agent-build' }
     stages {
         stage('clone') {
             steps {
-               git branch: "main", url: 'https://github.com/mounikachitiki/pipeline.git'
+               git branch: "main", url: 'https://github.com/opskillsup/java-war-repo.git'
             }
         }
         stage('build') {
